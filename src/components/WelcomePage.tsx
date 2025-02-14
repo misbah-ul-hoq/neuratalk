@@ -1,9 +1,10 @@
+import Link from "next/link";
 import React from "react";
 
 const WelcomePage = () => {
   return (
     <div className="">
-      <h2 className="text-center font-bold text-3xl lg:text-5xl mb-8 lg:mb-14">
+      <h2 className="text-center font-bold text-3xl lg:text-5xl mb-10 lg:mb-14">
         Welcome to Neuratalk
       </h2>
 
@@ -18,12 +19,15 @@ const WelcomePage = () => {
         </div>
       </div>
 
-      <span className="divider">or</span>
+      <span className="divider my-7">or</span>
 
       <div className="space-y-2 flex flex-col items-center">
-        <button className="btn btn-neutral rounded-full btn-wide">
+        <Link
+          href={`/temp-chat`}
+          className="btn btn-neutral rounded-full btn-wide"
+        >
           Continue Without Login
-        </button>
+        </Link>
         <p className="text-center">
           Your chat history won&apos;t be saved if you continue without login
         </p>
