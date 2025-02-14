@@ -1,9 +1,12 @@
+import { navHeight } from "@/utils/constants";
 import Image from "next/image";
 import React from "react";
 
 const NavBar = () => {
   return (
-    <header className="bg-base-200 h-16 flex items-center sticky top-0">
+    <header
+      className={`bg-base-200 h-${navHeight} flex items-center sticky top-0`}
+    >
       <nav className="flex justify-between items-center container-center ">
         <h3 className="flex items-center gap-1 font-mono cursor-pointer">
           <Image
