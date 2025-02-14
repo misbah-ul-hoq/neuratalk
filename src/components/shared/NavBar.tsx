@@ -11,6 +11,7 @@ const NavBar = () => {
             alt="NeuraTalk Logo"
             height={50}
             width={50}
+            className="text-white"
           />
           NeuraTalk
         </h3>
