@@ -53,6 +53,7 @@ const TempChat = () => {
                 const value = e.target.value;
                 setPrompt(value);
               }}
+              value={prompt}
             />
             <button
               className="btn btn-sm lg:btn-md absolute right-[5px] bottom-4 !bg-base-100 shadow-none border-none z-0 btn-circle"
