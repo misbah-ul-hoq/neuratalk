@@ -9,6 +9,7 @@ import { devInfo } from "../../public/data/devInfo";
 
 interface Chats {
   prompt: string;
+  title: string;
   response: string;
 }
 const TempChat = () => {
@@ -19,22 +20,25 @@ const TempChat = () => {
   const sendPrompt = async () => {
     setLoading(true);
     setChats(
-      chats ? [...chats, { prompt, response: "" }] : [{ prompt, response: "" }]
+      chats
+        ? [...chats, { prompt, response: "", title: "" }]
+        : [{ prompt, response: "", title: "" }]
     );
     const fullPrompt = `${devInfo} ${prompt}`;
     try {
       const res = await fetch("/api/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: fullPrompt }),
+        body: JSON.stringify({ fullPrompt, prompt }),
       });
       const data = await res.json();
+      console.log(data);
 
       if (data)
         setChats(
           chats
-            ? [...chats, { prompt, response: data.message }]
-            : [{ prompt, response: data.message }]
+            ? [...chats, { prompt, response: data.message, title: data.title }]
+            : [{ prompt, response: data.message, title: data.title }]
         );
     } catch (error) {
       console.error("Error fetching secret key:", error);
