@@ -4,7 +4,7 @@ import NavBar from "@/components/shared/NavBar";
 import { store } from "@/redux/store";
 import React, { ReactNode } from "react";
 import { Provider } from "react-redux";
-const RootLayoutClient = ({ children }: { children: ReactNode }) => {
+const StoreProvider = ({ children }: { children: ReactNode }) => {
   return (
     <Provider store={store}>
       <NavBar />
@@ -13,4 +13,4 @@ const RootLayoutClient = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default RootLayoutClient;
+export default StoreProvider;

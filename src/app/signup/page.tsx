@@ -1,6 +1,11 @@
 "use client";
+import {
+  useSignupMutation,
+  useVerifyOtpMutation,
+} from "@/redux/features/auth/authApiSlice";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Swal from "sweetalert2";
 
 interface SignupFormData {
   name: string;
@@ -22,10 +27,25 @@ export default function SignupForm() {
     watch,
     formState: { errors },
   } = useForm<SignupFormData>();
+  const [addSignUpData] = useSignupMutation();
 
   const onSubmit: SubmitHandler<SignupFormData> = (data) => {
     setUserData(data);
-    setStep(2);
+
+    addSignUpData(data).then((res) => {
+      if (!res.error) {
+        setStep(2);
+      }
+      if (res.error) {
+        console.log(res);
+        Swal.fire({
+          icon: "error",
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          title: res?.error?.data?.message,
+        });
+      }
+    });
   };
 
   return (
@@ -86,7 +106,7 @@ export default function SignupForm() {
             )}
 
             <button type="submit" className="btn btn-neutral btn-block">
-              Next
+              Send OTP
             </button>
           </form>
         ) : (
@@ -103,9 +123,21 @@ interface OtpFormProps {
 
 function OtpForm({ userData }: OtpFormProps) {
   const { register, handleSubmit } = useForm<OtpFormData>();
+  const [addOtp] = useVerifyOtpMutation();
 
   const onSubmit: SubmitHandler<OtpFormData> = (data) => {
     console.log("OTP Verified!", data, userData);
+    addOtp({ ...userData, ...data }).then((res) => {
+      const isError = res.error ? true : false;
+      console.log(res);
+      Swal.fire({
+        icon: isError ? "error" : "success",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        title: isError ? res?.error?.data?.message : "Success",
+        text: isError ? "Please try again" : "Signup successful",
+      });
+    });
   };
 
   return (
