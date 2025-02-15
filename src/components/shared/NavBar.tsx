@@ -1,12 +1,22 @@
-import { navHeight } from "@/utils/constants";
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 
 const NavBar = () => {
+  const [theme, setTheme] = React.useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setTheme(savedTheme);
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      }
+    }
+  }, []);
   return (
-    <header
-      className={`bg-base-200 h-${navHeight} flex items-center sticky top-0`}
-    >
+    <header className={`bg-base-200 h-16 flex items-center sticky top-0`}>
       <nav className="flex justify-between items-center container-center ">
         <h3 className="flex items-center gap-1 font-mono cursor-pointer">
           <Image
@@ -38,6 +48,18 @@ const NavBar = () => {
             type="checkbox"
             value="dark"
             className="toggle theme-controller"
+            checked={theme === "dark"}
+            onChange={(e) => {
+              setTheme(e.target.checked ? "dark" : "light");
+              localStorage.setItem(
+                "theme",
+                e.target.checked ? "dark" : "light"
+              );
+              document.documentElement.setAttribute(
+                "data-theme",
+                e.target.checked ? "dark" : "light"
+              );
+            }}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
