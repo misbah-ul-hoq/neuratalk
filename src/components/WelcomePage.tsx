@@ -13,9 +13,9 @@ const WelcomePage = () => {
           <button className="btn btn-neutral btn-outline w-28 rounded-full">
             Log In
           </button>
-          <button className="btn btn-neutral w-28 rounded-full ">
+          <Link href={"/signup"} className="btn btn-neutral w-28 rounded-full ">
             Sign Up
-          </button>
+          </Link>
         </div>
       </div>
 

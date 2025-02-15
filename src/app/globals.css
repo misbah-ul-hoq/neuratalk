@@ -22,4 +22,7 @@ body {
   .container-center {
     @apply w-11/12 mx-auto max-w-screen-2xl;
   }
+  p {
+    @apply text-gray-700 dark:text-white;
+  }
 }
