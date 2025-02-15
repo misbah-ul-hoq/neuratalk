@@ -49,8 +49,8 @@ export default function SignupForm() {
   };
 
   return (
-    <div className={`flex h-[calc(100vh-75px)] items-center justify-center`}>
-      <div className="max-w-96 rounded-lg p-8">
+    <div className={`flex h-[calc(100vh-150px)] items-center justify-center`}>
+      <div className="max-w-96 rounded-lg p-6 sm:p-7 lg:p-0">
         {step === 1 ? (
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2 className="mb-4 text-2xl font-bold">Signup</h2>
