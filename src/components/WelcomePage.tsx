@@ -24,12 +24,12 @@ const WelcomePage = () => {
       <div className="flex flex-col items-center space-y-2">
         <Link
           href={`/temp-chat`}
-          className="btn btn-neutral btn-wide rounded-full"
+          className="btn btn-outline btn-neutral btn-wide rounded-full"
         >
           Continue Without Login
         </Link>
-        <p className="text-center">
-          Your chat history won&apos;t be saved if you continue without login
+        <p className="text-center text-sm">
+          Your chat history won&apos;t be saved if you continue without login.
         </p>
       </div>
     </div>

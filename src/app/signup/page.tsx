@@ -58,7 +58,7 @@ export default function SignupForm() {
               type="text"
               placeholder="Name"
               {...register("name", { required: "Name is required" })}
-              className="input input-bordered mt-2 w-full"
+              className="input input-bordered mt-2 w-full rounded-full"
             />
             {errors.name && (
               <span className="text-sm text-red-500">
@@ -70,7 +70,7 @@ export default function SignupForm() {
               type="email"
               placeholder="Email"
               {...register("email", { required: "Email is required" })}
-              className="input input-bordered mt-2 w-full"
+              className="input input-bordered mt-2 w-full rounded-full"
             />
             {errors.email && (
               <span className="text-sm text-red-500">
@@ -82,7 +82,7 @@ export default function SignupForm() {
               type="password"
               placeholder="Password"
               {...register("password", { required: "Password is required" })}
-              className="input input-bordered mt-2 w-full"
+              className="input input-bordered mt-2 w-full rounded-full"
             />
             {errors.password && (
               <span className="text-sm text-red-500">
@@ -97,7 +97,7 @@ export default function SignupForm() {
                 validate: (value) =>
                   value === watch("password") || "Passwords do not match",
               })}
-              className="input input-bordered mb-3 mt-2 w-full"
+              className="input input-bordered mb-3 mt-2 w-full rounded-full"
             />
             {errors.confirmPassword && (
               <span className="text-sm text-red-500">
@@ -105,7 +105,10 @@ export default function SignupForm() {
               </span>
             )}
 
-            <button type="submit" className="btn btn-neutral btn-block">
+            <button
+              type="submit"
+              className="btn btn-neutral btn-block rounded-full"
+            >
               Send OTP
             </button>
           </form>
@@ -148,11 +151,11 @@ function OtpForm({ userData }: OtpFormProps) {
         type="text"
         placeholder="Enter OTP"
         {...register("otp", { required: "OTP is required" })}
-        className="input input-bordered mb-2 w-full"
+        className="input input-bordered mb-2 w-full rounded-full"
       />
       <button
         type="submit"
-        className="w-full rounded bg-green-500 p-2 text-white"
+        className="w-full rounded-full bg-green-500 p-2 text-white"
       >
         Verify OTP
       </button>
