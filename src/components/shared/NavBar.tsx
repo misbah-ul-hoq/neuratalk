@@ -16,9 +16,9 @@ const NavBar = () => {
     }
   }, []);
   return (
-    <header className={`bg-base-200 h-16 flex items-center sticky top-0`}>
-      <nav className="flex justify-between items-center container-center ">
-        <h3 className="flex items-center gap-1 font-mono cursor-pointer">
+    <header className={`sticky top-0 flex h-16 items-center bg-base-200`}>
+      <nav className="container-center flex items-center justify-between">
+        <h3 className="flex cursor-pointer items-center gap-1 font-mono">
           <Image
             src={`/neuratalk-logo.png`}
             alt="NeuraTalk Logo"
@@ -47,17 +47,17 @@ const NavBar = () => {
           <input
             type="checkbox"
             value="dark"
-            className="toggle theme-controller"
+            className="theme-controller toggle"
             checked={theme === "dark"}
             onChange={(e) => {
               setTheme(e.target.checked ? "dark" : "light");
               localStorage.setItem(
                 "theme",
-                e.target.checked ? "dark" : "light"
+                e.target.checked ? "dark" : "light",
               );
               document.documentElement.setAttribute(
                 "data-theme",
-                e.target.checked ? "dark" : "light"
+                e.target.checked ? "dark" : "light",
               );
             }}
           />

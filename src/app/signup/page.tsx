@@ -29,39 +29,45 @@ export default function SignupForm() {
   };
 
   return (
-    <div className={`flex justify-center items-center h-[calc(100vh-75px)]`}>
-      <div className="p-8 rounded-lg max-w-96">
+    <div className={`flex h-[calc(100vh-75px)] items-center justify-center`}>
+      <div className="max-w-96 rounded-lg p-8">
         {step === 1 ? (
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="text-2xl font-bold mb-4">Signup</h2>
+            <h2 className="mb-4 text-2xl font-bold">Signup</h2>
             <input
               type="text"
               placeholder="Name"
               {...register("name", { required: "Name is required" })}
-              className="input input-bordered w-full mt-2"
+              className="input input-bordered mt-2 w-full"
             />
             {errors.name && (
-              <p className="text-red-500">{errors.name.message}</p>
+              <span className="text-sm text-red-500">
+                {errors.name.message}
+              </span>
             )}
 
             <input
               type="email"
               placeholder="Email"
               {...register("email", { required: "Email is required" })}
-              className="input input-bordered w-full mt-2"
+              className="input input-bordered mt-2 w-full"
             />
             {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
+              <span className="text-sm text-red-500">
+                {errors.email.message}
+              </span>
             )}
 
             <input
               type="password"
               placeholder="Password"
               {...register("password", { required: "Password is required" })}
-              className="input input-bordered w-full mt-2"
+              className="input input-bordered mt-2 w-full"
             />
             {errors.password && (
-              <p className="text-red-500">{errors.password.message}</p>
+              <span className="text-sm text-red-500">
+                {errors.password.message}
+              </span>
             )}
 
             <input
@@ -71,13 +77,15 @@ export default function SignupForm() {
                 validate: (value) =>
                   value === watch("password") || "Passwords do not match",
               })}
-              className="input input-bordered w-full mt-2 mb-3"
+              className="input input-bordered mb-3 mt-2 w-full"
             />
             {errors.confirmPassword && (
-              <p className="text-red-500">{errors.confirmPassword.message}</p>
+              <span className="text-sm text-red-500">
+                {errors.confirmPassword.message}
+              </span>
             )}
 
-            <button type="submit" className="btn btn-block btn-neutral">
+            <button type="submit" className="btn btn-neutral btn-block">
               Next
             </button>
           </form>
@@ -102,21 +110,21 @@ function OtpForm({ userData }: OtpFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="text-2xl font-bold mb-1">OTP Verification</h2>
-      <p className="text-sm mb-4">Enter the OTP sent to {userData?.email}</p>
+      <h2 className="mb-1 text-2xl font-bold">OTP Verification</h2>
+      <p className="mb-4 text-sm">Enter the OTP sent to {userData?.email}</p>
       <input
         type="text"
         placeholder="Enter OTP"
         {...register("otp", { required: "OTP is required" })}
-        className="input input-bordered w-full mb-2"
+        className="input input-bordered mb-2 w-full"
       />
       <button
         type="submit"
-        className="w-full bg-green-500 text-white p-2 rounded"
+        className="w-full rounded bg-green-500 p-2 text-white"
       >
         Verify OTP
       </button>
-      <span className="text-xs mt-1">
+      <span className="mt-1 text-xs">
         * Don&apos;t refresh the page until OTP is verified
       </span>
     </form>

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const title = await generateTitle(
       prompt,
       result.response.text(),
-      geminiApiKey as string
+      geminiApiKey as string,
     );
 
     if (!geminiApiKey) {
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       {
         status: 200,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 async function generateTitle(
   prompt: string,
   response: string,
-  geminiApiKey: string
+  geminiApiKey: string,
 ) {
   const genAI = new GoogleGenerativeAI(geminiApiKey);
   const neuraTalk = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });

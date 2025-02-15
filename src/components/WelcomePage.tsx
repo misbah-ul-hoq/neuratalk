@@ -4,16 +4,16 @@ import React from "react";
 const WelcomePage = () => {
   return (
     <div className="">
-      <h2 className="text-center font-bold text-3xl lg:text-5xl mb-10 lg:mb-14">
+      <h2 className="mb-10 text-center text-3xl font-bold lg:mb-14 lg:text-5xl">
         Welcome to Neuratalk
       </h2>
 
       <div>
-        <div className="flex gap-5 items-center justify-center">
-          <button className="btn btn-neutral btn-outline w-28 rounded-full">
+        <div className="flex items-center justify-center gap-5">
+          <button className="btn btn-outline btn-neutral w-28 rounded-full">
             Log In
           </button>
-          <Link href={"/signup"} className="btn btn-neutral w-28 rounded-full ">
+          <Link href={"/signup"} className="btn btn-neutral w-28 rounded-full">
             Sign Up
           </Link>
         </div>
@@ -21,10 +21,10 @@ const WelcomePage = () => {
 
       <span className="divider my-7">or</span>
 
-      <div className="space-y-2 flex flex-col items-center">
+      <div className="flex flex-col items-center space-y-2">
         <Link
           href={`/temp-chat`}
-          className="btn btn-neutral rounded-full btn-wide"
+          className="btn btn-neutral btn-wide rounded-full"
         >
           Continue Without Login
         </Link>
