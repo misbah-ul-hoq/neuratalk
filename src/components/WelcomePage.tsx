@@ -10,9 +10,12 @@ const WelcomePage = () => {
 
       <div>
         <div className="flex items-center justify-center gap-5">
-          <button className="btn btn-outline btn-neutral w-28 rounded-full">
+          <Link
+            href={`/login`}
+            className="btn btn-outline btn-neutral w-28 rounded-full"
+          >
             Log In
-          </button>
+          </Link>
           <Link href={"/signup"} className="btn btn-neutral w-28 rounded-full">
             Sign Up
           </Link>

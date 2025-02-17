@@ -13,7 +13,7 @@ const authApiSlice = baseApi.injectEndpoints({
       query: (credentials) => {
         console.log(credentials);
         return {
-          url: "/api/v1/auth/signup",
+          url: "/auth/signup",
           method: "POST",
           body: { ...credentials },
         };
@@ -21,7 +21,7 @@ const authApiSlice = baseApi.injectEndpoints({
     }),
     verifyOtp: builder.mutation({
       query: (credentials) => ({
-        url: "/api/v1/auth/verify-otp",
+        url: "/auth/verify-otp",
         method: "POST",
         body: { ...credentials },
       }),

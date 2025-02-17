@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect } from "react";
 
 const NavBar = () => {
@@ -18,7 +19,10 @@ const NavBar = () => {
   return (
     <header className={`sticky top-0 flex h-16 items-center bg-base-200`}>
       <nav className="container-center flex items-center justify-between">
-        <h3 className="flex cursor-pointer items-center gap-1 font-mono">
+        <Link
+          href={`/`}
+          className="flex cursor-pointer items-center gap-1 font-mono"
+        >
           <Image
             src={`/neuratalk-logo.png`}
             alt="NeuraTalk Logo"
@@ -27,7 +31,7 @@ const NavBar = () => {
             className="text-white"
           />
           NeuraTalk
-        </h3>
+        </Link>
 
         <label className="grid cursor-pointer place-items-center">
           <input

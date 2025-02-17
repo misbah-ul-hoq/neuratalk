@@ -3,6 +3,7 @@ import {
   useSignupMutation,
   useVerifyOtpMutation,
 } from "@/redux/features/auth/authApiSlice";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
@@ -138,7 +139,11 @@ function OtpForm({ userData }: OtpFormProps) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         title: isError ? res?.error?.data?.message : "Success",
-        text: isError ? "Please try again" : "Signup successful",
+        text: isError ? "Please try again" : "Signup successful, now login",
+      }).then(() => {
+        if (!isError) {
+          redirect("/login");
+        }
       });
     });
   };
