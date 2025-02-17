@@ -53,12 +53,12 @@ export default function SignupForm() {
       <div className="max-w-96 rounded-lg p-6 sm:p-7 lg:p-0">
         {step === 1 ? (
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="mb-4 text-2xl font-bold">Signup</h2>
+            <h2 className="mb-4 text-3xl font-bold lg:text-4xl">SignUp</h2>
             <input
               type="text"
               placeholder="Name"
               {...register("name", { required: "Name is required" })}
-              className="input input-bordered mt-2 w-full rounded-full"
+              className="input input-bordered mt-2 w-full rounded-full shadow-md"
             />
             {errors.name && (
               <span className="text-sm text-red-500">
@@ -70,7 +70,7 @@ export default function SignupForm() {
               type="email"
               placeholder="Email"
               {...register("email", { required: "Email is required" })}
-              className="input input-bordered mt-2 w-full rounded-full"
+              className="input input-bordered mt-2 w-full rounded-full shadow-md"
             />
             {errors.email && (
               <span className="text-sm text-red-500">
@@ -82,7 +82,7 @@ export default function SignupForm() {
               type="password"
               placeholder="Password"
               {...register("password", { required: "Password is required" })}
-              className="input input-bordered mt-2 w-full rounded-full"
+              className="input input-bordered mt-2 w-full rounded-full shadow-md"
             />
             {errors.password && (
               <span className="text-sm text-red-500">
@@ -97,7 +97,7 @@ export default function SignupForm() {
                 validate: (value) =>
                   value === watch("password") || "Passwords do not match",
               })}
-              className="input input-bordered mb-3 mt-2 w-full rounded-full"
+              className="input input-bordered mb-3 mt-2 w-full rounded-full shadow-md"
             />
             {errors.confirmPassword && (
               <span className="text-sm text-red-500">
@@ -107,7 +107,7 @@ export default function SignupForm() {
 
             <button
               type="submit"
-              className="btn btn-neutral btn-block rounded-full"
+              className="btn btn-neutral btn-block mt-4 rounded-full"
             >
               Send OTP
             </button>
