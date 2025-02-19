@@ -1,20 +1,49 @@
+"use client";
+import FullScreenSpinner from "@/components/shared/FullScreenSpinner";
+import { useGetUserInfoMutation } from "@/redux/features/auth/authApiSlice";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import moment from "moment";
 
+interface User {
+  name: string;
+  email: string;
+  photoUrl: string;
+  createdAt: string;
+}
 const ProfilePage = () => {
-  const user = {
-    name: "John Doe",
-    email: "johndoe@example.com",
-    bio: "A passionate developer who loves to build amazing applications.",
-    avatar: "https://via.placeholder.com/150",
-  };
+  const [getUserInfo] = useGetUserInfoMutation();
+  const [user, setUser] = useState<User | null>();
+  // const user = {
+  //   name: "John Doe",
+  //   email: "johndoe@example.com",
+  //   bio: "A passionate developer who loves to build amazing applications.",
+  //   avatar: "https://via.placeholder.com/150",
+  // };
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+
+    if (authToken) {
+      getUserInfo({ authToken }).then((res) => {
+        console.log(res);
+        if (res.error) {
+          console.log(res);
+        } else {
+          setUser(res.data.user);
+        }
+      });
+    }
+  }, [getUserInfo]);
+
+  if (!user) return <FullScreenSpinner />;
 
   return (
     <div className="flex min-h-[calc(100vh-80px)] items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-6 text-center shadow-lg">
+      <div className="w-full max-w-md rounded-2xl bg-base-200 p-6 text-center shadow-lg">
         <div className="mx-auto h-24 w-24 rounded-full border-4 border-gray-200">
           <Image
-            src={`/user.jpg`}
+            src={`${user?.photoUrl || "/user.jpg"}`}
             alt="User Avatar"
             height={200}
             width={200}
@@ -22,11 +51,17 @@ const ProfilePage = () => {
           />
         </div>
         <div className="space-y-2">
-          <h2 className="mt-4 text-xl font-semibold text-gray-800">
-            Hi {user.name}, Welcome to NeuraTalk
+          <h2 className="mt-4 text-lg font-semibold">
+            Hi, {user?.name}, Welcome to NeuraTalk
           </h2>
-          <p className="">{user.email}</p>
-          <p className="">{user.bio}</p>
+          <p className="">
+            <strong>Email: </strong>
+            {user?.email}
+          </p>
+          <p className="">
+            <strong> Signup Date:</strong>{" "}
+            {moment(user?.createdAt).format("Do MMMM YYYY")}
+          </p>
         </div>
       </div>
     </div>

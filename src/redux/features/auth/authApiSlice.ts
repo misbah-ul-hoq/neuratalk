@@ -26,8 +26,22 @@ const authApiSlice = baseApi.injectEndpoints({
         body: { ...credentials },
       }),
     }),
+    getUserInfo: builder.mutation({
+      query: (credentials) => {
+        console.log(credentials);
+        return {
+          url: "/auth/me",
+          method: "POST",
+          body: { ...credentials },
+        };
+      },
+    }),
   }),
 });
 
-export const { useLoginMutation, useSignupMutation, useVerifyOtpMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useSignupMutation,
+  useVerifyOtpMutation,
+  useGetUserInfoMutation,
+} = authApiSlice;
