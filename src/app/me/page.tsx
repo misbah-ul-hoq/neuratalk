@@ -4,6 +4,9 @@ import { useGetUserInfoMutation } from "@/redux/features/auth/authApiSlice";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { loginSuccess } from "@/redux/features/auth/authSlice";
 
 interface User {
   name: string;
@@ -14,6 +17,7 @@ interface User {
 const ProfilePage = () => {
   const [getUserInfo] = useGetUserInfoMutation();
   const [user, setUser] = useState<User | null>();
+  const dispatch = useDispatch<AppDispatch>();
   // const user = {
   //   name: "John Doe",
   //   email: "johndoe@example.com",
@@ -27,14 +31,15 @@ const ProfilePage = () => {
     if (authToken) {
       getUserInfo({ authToken }).then((res) => {
         console.log(res);
+        dispatch(loginSuccess(res.data));
         if (res.error) {
           console.log(res);
         } else {
-          setUser(res.data.user);
+          setUser(res.data);
         }
       });
     }
-  }, [getUserInfo]);
+  }, [getUserInfo, dispatch]);
 
   if (!user) return <FullScreenSpinner />;
 
