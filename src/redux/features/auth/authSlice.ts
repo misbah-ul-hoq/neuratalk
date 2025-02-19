@@ -9,11 +9,13 @@ interface User {
 interface AuthState {
   isAuthenticated: boolean;
   user: null | User;
+  loading: boolean;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
   user: null,
+  loading: true,
 };
 
 const authSlice = createSlice({
@@ -23,10 +25,13 @@ const authSlice = createSlice({
     loginSuccess: (state, action: PayloadAction<User>) => {
       state.isAuthenticated = true;
       state.user = action.payload;
+      state.loading = false;
     },
     logout: (state) => {
+      localStorage.removeItem("authToken");
       state.isAuthenticated = false;
       state.user = null;
+      state.loading = false;
     },
   },
 });
