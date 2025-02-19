@@ -32,7 +32,7 @@ const LoginForm: React.FC = () => {
           icon: "error",
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          title: res?.error?.data?.message,
+          text: res?.error?.data?.message,
         });
       } else {
         // localStorage.setItem("authToken", res.data.authToken);
@@ -49,18 +49,17 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <section className="flex min-h-[calc(100vh-80px)] items-center justify-center p-4">
-      <div className="w-full max-w-sm rounded-2xl bg-accent p-6 text-accent-content shadow-lg">
+    <section className="flex min-h-[calc(100vh-100px)] items-center justify-center">
+      <div className="w-full max-w-sm rounded-2xl p-6">
         <h2 className="mb-4 text-center text-2xl font-semibold lg:text-3xl">
           Login
         </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="">
-            <label className="block text-sm">Email</label>
             <input
               type="email"
               {...register("email", { required: "Email is required" })}
-              className="input input-bordered w-full rounded-full"
+              className="input input-bordered w-full rounded-full shadow-md"
               placeholder="Enter your email"
             />
             {errors.email && (
@@ -71,11 +70,10 @@ const LoginForm: React.FC = () => {
           </div>
 
           <div className="mt-4">
-            <label className="block text-sm">Password</label>
             <input
               type="password"
               {...register("password", { required: "Password is required" })}
-              className="input input-bordered w-full rounded-full"
+              className="input input-bordered w-full rounded-full shadow-md"
               placeholder="Enter your password"
             />
             {errors.password && (
@@ -87,7 +85,7 @@ const LoginForm: React.FC = () => {
 
           <button
             type="submit"
-            className="btn btn-neutral btn-block mt-6 rounded-full"
+            className="btn btn-neutral btn-block mt-7 rounded-full"
           >
             Login
           </button>

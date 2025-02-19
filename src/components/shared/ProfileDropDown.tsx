@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ThemeChanger from "./ThemeChanger";
 import { logout } from "@/redux/features/auth/authSlice";
 import Swal from "sweetalert2";
+import { redirect } from "next/navigation";
 
 const ProfileDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -36,6 +37,7 @@ const ProfileDropdown: React.FC = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(logout());
+        redirect("/temp-chat");
       }
     });
   };

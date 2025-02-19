@@ -8,6 +8,7 @@ import { useGetUserInfoMutation } from "@/redux/features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { loginSuccess } from "@/redux/features/auth/authSlice";
+import { redirect } from "next/navigation";
 
 interface User {
   name: string;
@@ -40,6 +41,8 @@ const ProfilePage = () => {
           setUser(res.data);
         }
       });
+    } else if (!authToken) {
+      redirect("/login");
     }
   }, [getUserInfo, dispatch]);
 
