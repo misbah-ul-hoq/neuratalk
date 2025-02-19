@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
           title: res?.error?.data?.message,
         });
       } else {
-        localStorage.setItem("authToken", res.data.authToken);
+        // localStorage.setItem("authToken", res.data.authToken);
         Swal.fire({
           icon: "success",
           title: "Login successful",

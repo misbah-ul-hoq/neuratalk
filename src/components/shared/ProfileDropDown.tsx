@@ -5,12 +5,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ThemeChanger from "./ThemeChanger";
 import { logout } from "@/redux/features/auth/authSlice";
+import Swal from "sweetalert2";
 
 const ProfileDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
+  console.log(user);
 
   // Function to handle clicks outside the dropdown
   const handleClickOutside = (event: MouseEvent) => {
@@ -23,7 +25,19 @@ const ProfileDropdown: React.FC = () => {
   };
 
   const handeLogout = () => {
-    dispatch(logout());
+    Swal.fire({
+      title: "Are you sure you want to logout?",
+      text: `Logout of Neuratalk as ${user?.email}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(logout());
+      }
+    });
   };
 
   // Add event listener for clicks outside the dropdown
@@ -42,7 +56,7 @@ const ProfileDropdown: React.FC = () => {
         className="flex items-center focus:outline-none"
       >
         <Image
-          src={`${user.photoUrl || "/user.jpg"}`} // Replace with your profile picture URL
+          src={`${user?.photoUrl || "/user.jpg"}`} // Replace with your profile picture URL
           alt="Profile"
           className="h-10 w-10 rounded-full"
           height={10}

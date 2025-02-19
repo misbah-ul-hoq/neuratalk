@@ -1,9 +1,10 @@
 "use client";
-import FullScreenSpinner from "@/components/shared/FullScreenSpinner";
-import { useGetUserInfoMutation } from "@/redux/features/auth/authApiSlice";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+
+import FullScreenSpinner from "@/components/shared/FullScreenSpinner";
+import { useGetUserInfoMutation } from "@/redux/features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { loginSuccess } from "@/redux/features/auth/authSlice";
@@ -18,12 +19,6 @@ const ProfilePage = () => {
   const [getUserInfo] = useGetUserInfoMutation();
   const [user, setUser] = useState<User | null>();
   const dispatch = useDispatch<AppDispatch>();
-  // const user = {
-  //   name: "John Doe",
-  //   email: "johndoe@example.com",
-  //   bio: "A passionate developer who loves to build amazing applications.",
-  //   avatar: "https://via.placeholder.com/150",
-  // };
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
@@ -31,7 +26,14 @@ const ProfilePage = () => {
     if (authToken) {
       getUserInfo({ authToken }).then((res) => {
         console.log(res);
-        dispatch(loginSuccess(res.data));
+        dispatch(
+          loginSuccess({
+            user: res?.data,
+            isAuthenticated: true,
+            loading: false,
+            authToken: "",
+          }),
+        );
         if (res.error) {
           console.log(res);
         } else {
