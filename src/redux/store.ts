@@ -1,10 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { baseApi } from "./api/api";
+import authReducer from "./features/auth/authSlice";
 
 const rootReducer = combineReducers({
   authToken: "",
   [baseApi.reducerPath]: baseApi.reducer,
+  auth: authReducer,
 });
+
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {

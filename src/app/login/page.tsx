@@ -1,8 +1,11 @@
 "use client";
 import { useLoginMutation } from "@/redux/features/auth/authApiSlice";
+import { loginSuccess } from "@/redux/features/auth/authSlice";
+import { AppDispatch } from "@/redux/store";
 import { redirect } from "next/navigation";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 
 interface LoginFormInputs {
@@ -18,6 +21,7 @@ const LoginForm: React.FC = () => {
   } = useForm<LoginFormInputs>();
 
   const [addLoginData] = useLoginMutation();
+  const dispatch = useDispatch<AppDispatch>();
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
     console.log(data);
@@ -37,6 +41,7 @@ const LoginForm: React.FC = () => {
           title: "Login successful",
           text: "You are now logged in",
         }).then(() => {
+          dispatch(loginSuccess(res.data));
           redirect("/me");
         });
       }
