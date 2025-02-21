@@ -5,7 +5,7 @@ import { LuSendHorizontal } from "react-icons/lu";
 // import { marked } from "marked";
 // import Markdown from "react-markdown";
 import MarkdownRenderer from "./MarkdownRenderer";
-import { devInfo } from "../../public/data/devInfo";
+import { useTempChatMutation } from "@/redux/features/chats/chatApiSlice";
 
 interface Chats {
   prompt: string;
@@ -16,6 +16,7 @@ const TempChat = () => {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [chats, setChats] = useState<Chats[] | null>(null);
+  const [addTempChatPrompt, { isLoading }] = useTempChatMutation();
 
   const sendPrompt = async () => {
     setLoading(true);
@@ -24,22 +25,29 @@ const TempChat = () => {
         ? [...chats, { prompt, response: "", title: "" }]
         : [{ prompt, response: "", title: "" }],
     );
-    const fullPrompt = `${devInfo} ${prompt}`;
-    try {
-      const res = await fetch("/api/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullPrompt, prompt }),
-      });
-      const data = await res.json();
-      console.log(data);
 
-      if (data)
-        setChats(
-          chats
-            ? [...chats, { prompt, response: data.message, title: data.title }]
-            : [{ prompt, response: data.message, title: data.title }],
-        );
+    try {
+      addTempChatPrompt({ prompt }).then((res) => {
+        if (res.data)
+          setChats(
+            chats
+              ? [
+                  ...chats,
+                  {
+                    prompt,
+                    response: res.data.response,
+                    title: res.data.title,
+                  },
+                ]
+              : [
+                  {
+                    prompt,
+                    response: res.data.response,
+                    title: res.data.title,
+                  },
+                ],
+          );
+      });
     } catch (error) {
       console.error("Error fetching secret key:", error);
     } finally {
@@ -75,7 +83,7 @@ const TempChat = () => {
                         </div>
                       </div>
                       <div className="chat-bubble bg-base-300 text-base-content">
-                        {index === chats.length - 1 && loading ? (
+                        {index === chats.length - 1 && isLoading ? (
                           <span className="loading loading-dots loading-md"></span>
                         ) : (
                           // <p

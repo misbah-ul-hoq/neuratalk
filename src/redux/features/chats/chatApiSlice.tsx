@@ -9,7 +9,14 @@ const authApiSlice = baseApi.injectEndpoints({
         body: { ...credentials },
       }),
     }),
+    tempChat: builder.mutation({
+      query: (credentials) => ({
+        url: "/chat/temp-chat",
+        method: "POST",
+        body: { ...credentials },
+      }),
+    }),
   }),
 });
 
-export const { useSaveChatMutation } = authApiSlice;
+export const { useSaveChatMutation, useTempChatMutation } = authApiSlice;
