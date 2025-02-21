@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { loginSuccess } from "@/redux/features/auth/authSlice";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 interface User {
   name: string;
@@ -73,6 +74,8 @@ const ProfilePage = () => {
             {moment(user?.createdAt).format("Do MMMM YYYY")}
           </p>
         </div>
+
+        <Link href={`/chat`}>Continue Chatting with Neuratalk.</Link>
       </div>
     </div>
   );

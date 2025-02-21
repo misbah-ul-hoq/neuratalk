@@ -28,7 +28,7 @@ const NavBar = () => {
   }
 
   return (
-    <header className={`sticky top-0 flex h-16 items-center bg-base-200`}>
+    <header className={`sticky top-0 z-10 flex h-16 items-center bg-base-200`}>
       <nav className="container-center flex items-center justify-between">
         <Link
           href={`/`}

@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu";
 import { devInfo } from "../../../public/data/devInfo";
+import { useSaveChatMutation } from "@/redux/features/chats/chatApiSlice";
 // import { marked } from "marked";
 // import Markdown from "react-markdown";
 
@@ -16,6 +17,7 @@ const TempChat = () => {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [chats, setChats] = useState<Chats[] | null>(null);
+  const [chatData] = useSaveChatMutation();
 
   const sendPrompt = async () => {
     setLoading(true);
@@ -34,6 +36,15 @@ const TempChat = () => {
       const data = await res.json();
       console.log(data);
 
+      chatData({
+        user: "test@gmail.com",
+        prompt,
+        response: data.message,
+        title: data.title,
+      }).then((res) => {
+        console.log(res);
+      });
+
       if (data)
         setChats(
           chats
@@ -49,7 +60,7 @@ const TempChat = () => {
   };
 
   return (
-    <section className="relative h-[calc(100dvh-4rem)] overflow-hidden">
+    <section className="relative h-[calc(100dvh-4rem)] overflow-y-auto">
       <div className="flex flex-col justify-stretch pt-3">
         <div className="max-h-[calc(100dvh-158px)] overflow-y-auto lg:max-h-[76vh]">
           <div className="container-center mx-auto mb-3 w-full !max-w-4xl grow">
