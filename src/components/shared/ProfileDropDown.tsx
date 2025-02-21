@@ -51,7 +51,7 @@ const ProfileDropdown: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative z-10" ref={dropdownRef}>
       {/* Profile Picture */}
       <button
         onClick={() => setIsOpen(!isOpen)}
