@@ -3,6 +3,7 @@ import {
   useSignupMutation,
   useVerifyOtpMutation,
 } from "@/redux/features/auth/authApiSlice";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -53,66 +54,76 @@ export default function SignupForm() {
     <div className={`flex h-[calc(100vh-150px)] items-center justify-center`}>
       <div className="max-w-96 rounded-lg p-6 sm:p-7 lg:p-0">
         {step === 1 ? (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="mb-4 text-3xl font-bold lg:text-4xl">SignUp</h2>
-            <input
-              type="text"
-              placeholder="Name"
-              {...register("name", { required: "Name is required" })}
-              className="input input-bordered mt-2 w-full rounded-full shadow-md"
-            />
-            {errors.name && (
-              <span className="text-sm text-red-500">
-                {errors.name.message}
-              </span>
-            )}
+          <>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <h2 className="mb-4 text-3xl font-bold lg:text-4xl">SignUp</h2>
+              <input
+                type="text"
+                placeholder="Name"
+                {...register("name", { required: "Name is required" })}
+                className="input input-bordered mt-2 w-full rounded-full shadow-md"
+              />
+              {errors.name && (
+                <span className="text-sm text-red-500">
+                  {errors.name.message}
+                </span>
+              )}
 
-            <input
-              type="email"
-              placeholder="Email"
-              {...register("email", { required: "Email is required" })}
-              className="input input-bordered mt-2 w-full rounded-full shadow-md"
-            />
-            {errors.email && (
-              <span className="text-sm text-red-500">
-                {errors.email.message}
-              </span>
-            )}
+              <input
+                type="email"
+                placeholder="Email"
+                {...register("email", { required: "Email is required" })}
+                className="input input-bordered mt-2 w-full rounded-full shadow-md"
+              />
+              {errors.email && (
+                <span className="text-sm text-red-500">
+                  {errors.email.message}
+                </span>
+              )}
 
-            <input
-              type="password"
-              placeholder="Password"
-              {...register("password", { required: "Password is required" })}
-              className="input input-bordered mt-2 w-full rounded-full shadow-md"
-            />
-            {errors.password && (
-              <span className="text-sm text-red-500">
-                {errors.password.message}
-              </span>
-            )}
+              <input
+                type="password"
+                placeholder="Password"
+                {...register("password", { required: "Password is required" })}
+                className="input input-bordered mt-2 w-full rounded-full shadow-md"
+              />
+              {errors.password && (
+                <span className="text-sm text-red-500">
+                  {errors.password.message}
+                </span>
+              )}
 
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              {...register("confirmPassword", {
-                validate: (value) =>
-                  value === watch("password") || "Passwords do not match",
-              })}
-              className="input input-bordered mb-3 mt-2 w-full rounded-full shadow-md"
-            />
-            {errors.confirmPassword && (
-              <span className="text-sm text-red-500">
-                {errors.confirmPassword.message}
-              </span>
-            )}
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                {...register("confirmPassword", {
+                  validate: (value) =>
+                    value === watch("password") || "Passwords do not match",
+                })}
+                className="input input-bordered mb-3 mt-2 w-full rounded-full shadow-md"
+              />
+              {errors.confirmPassword && (
+                <span className="text-sm text-red-500">
+                  {errors.confirmPassword.message}
+                </span>
+              )}
 
-            <button
-              type="submit"
-              className="btn btn-neutral btn-block mt-4 rounded-full"
-            >
-              Send OTP
-            </button>
-          </form>
+              <button
+                type="submit"
+                className="btn btn-neutral btn-block mt-4 rounded-full"
+              >
+                Send OTP
+              </button>
+            </form>
+            <div className="mt-3 text-center">
+              <span className="text-sm">
+                Already have an account?
+                <Link href="/login" className="px-2 text-primary underline">
+                  Login
+                </Link>
+              </span>
+            </div>
+          </>
         ) : (
           <OtpForm userData={userData} />
         )}

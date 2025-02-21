@@ -2,6 +2,7 @@
 import { useLoginMutation } from "@/redux/features/auth/authApiSlice";
 import { loginSuccess } from "@/redux/features/auth/authSlice";
 import { AppDispatch } from "@/redux/store";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -69,7 +70,7 @@ const LoginForm: React.FC = () => {
             )}
           </div>
 
-          <div className="mt-4">
+          <div className="mt-3">
             <input
               type="password"
               {...register("password", { required: "Password is required" })}
@@ -85,11 +86,23 @@ const LoginForm: React.FC = () => {
 
           <button
             type="submit"
-            className="btn btn-neutral btn-block mt-7 rounded-full"
+            className="btn btn-neutral btn-block mt-6 rounded-full"
           >
             Login
           </button>
         </form>
+
+        <div className="mt-5 flex flex-col justify-center gap-2 text-center">
+          <Link href={`/forgot-password`} className="text-sm">
+            Forgot Password?
+          </Link>
+          <span className="block text-center text-sm">
+            New to Neuratalk?
+            <Link href={`/signup`} className="pl-2 text-primary underline">
+              Signup
+            </Link>
+          </span>
+        </div>
       </div>
     </section>
   );
