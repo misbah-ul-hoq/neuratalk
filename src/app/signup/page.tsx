@@ -5,7 +5,7 @@ import {
 } from "@/redux/features/auth/authApiSlice";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2";
 
@@ -30,6 +30,13 @@ export default function SignupForm() {
     formState: { errors },
   } = useForm<SignupFormData>();
   const [addSignUpData] = useSignupMutation();
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      redirect("/me");
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<SignupFormData> = (data) => {
     setUserData(data);

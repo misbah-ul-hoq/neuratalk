@@ -4,7 +4,7 @@ import { loginSuccess } from "@/redux/features/auth/authSlice";
 import { AppDispatch } from "@/redux/store";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
@@ -23,6 +23,13 @@ const LoginForm: React.FC = () => {
 
   const [addLoginData] = useLoginMutation();
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      redirect("/me");
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
     console.log(data);
