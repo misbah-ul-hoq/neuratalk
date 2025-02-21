@@ -3,7 +3,7 @@
 import { RootState } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ThemeChanger from "./ThemeChanger";
 import ProfileDropdown from "./ProfileDropDown";
@@ -13,6 +13,14 @@ const NavBar = () => {
     (state: RootState) => state.auth,
   );
   console.log(isAuthenticated, user);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      setIsLoggedIn(true);
+    }
+  }, [isAuthenticated]);
 
   return (
     <header className={`sticky top-0 flex h-16 items-center bg-base-200`}>
@@ -31,9 +39,9 @@ const NavBar = () => {
           NeuraTalk
         </Link>
 
-        {!isAuthenticated && <ThemeChanger />}
+        {!isLoggedIn && <ThemeChanger />}
 
-        {isAuthenticated && <ProfileDropdown />}
+        {isLoggedIn && <ProfileDropdown />}
       </nav>
     </header>
   );

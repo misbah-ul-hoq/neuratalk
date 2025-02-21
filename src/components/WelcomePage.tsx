@@ -1,7 +1,18 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import { redirect } from "next/navigation";
+import React, { useEffect } from "react";
 
 const WelcomePage = () => {
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    console.log(authToken);
+    if (!authToken) {
+      redirect("/temp-chat");
+    } else {
+      redirect("/chat");
+    }
+  }, []);
   return (
     <div className="">
       <h2 className="mb-10 text-center text-3xl font-bold lg:mb-14 lg:text-5xl">
