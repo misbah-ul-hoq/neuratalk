@@ -3,8 +3,9 @@ import MarkdownRenderer from "@/components/MarkdownRenderer";
 import Image from "next/image";
 import React, { useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu";
-import { devInfo } from "../../../public/data/devInfo";
 import { useSaveChatMutation } from "@/redux/features/chats/chatApiSlice";
+import { useRouter } from "next/navigation";
+
 // import { marked } from "marked";
 // import Markdown from "react-markdown";
 
@@ -15,47 +16,44 @@ interface Chats {
 }
 const TempChat = () => {
   const [prompt, setPrompt] = useState("");
-  const [loading, setLoading] = useState(false);
   const [chats, setChats] = useState<Chats[] | null>(null);
-  const [chatData] = useSaveChatMutation();
+  const [addNewChat, { isLoading }] = useSaveChatMutation();
+  const router = useRouter();
 
   const sendPrompt = async () => {
-    setLoading(true);
     setChats(
       chats
         ? [...chats, { prompt, response: "", title: "" }]
         : [{ prompt, response: "", title: "" }],
     );
-    const fullPrompt = `${devInfo} ${prompt}`;
-    try {
-      const res = await fetch("/api/gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullPrompt, prompt }),
-      });
-      const data = await res.json();
-      console.log(data);
 
-      chatData({
-        user: "test@gmail.com",
+    try {
+      addNewChat({
+        user: "arbanpublicschool@gmail.com",
         prompt,
-        response: data.message,
-        title: data.title,
       }).then((res) => {
         console.log(res);
+        const data = res.data;
+        if (data)
+          setChats(
+            chats
+              ? [
+                  ...chats,
+                  {
+                    prompt,
+                    response:
+                      data.chats.chats[data.chats.chats.length - 1].response,
+                    title: data.chats.chats[data.chats.chats.length - 1].title,
+                  },
+                ]
+              : [{ prompt, response: data.response, title: data.title }],
+          );
+        router.push(`/chat/${data.chats._id}`);
       });
-
-      if (data)
-        setChats(
-          chats
-            ? [...chats, { prompt, response: data.message, title: data.title }]
-            : [{ prompt, response: data.message, title: data.title }],
-        );
     } catch (error) {
       console.error("Error fetching secret key:", error);
     } finally {
       setPrompt("");
-      setLoading(false);
     }
   };
 
@@ -86,15 +84,9 @@ const TempChat = () => {
                         </div>
                       </div>
                       <div className="chat-bubble bg-base-300 text-base-content">
-                        {index === chats.length - 1 && loading ? (
+                        {index === chats.length - 1 && isLoading ? (
                           <span className="loading loading-dots loading-md"></span>
                         ) : (
-                          // <p
-                          //   dangerouslySetInnerHTML={{
-                          //     __html: marked.parse(chat.response),
-                          //   }}
-                          // ></p>
-                          // <Markdown>{chat.response}</Markdown>
                           <MarkdownRenderer
                             content={chat.response}
                           ></MarkdownRenderer>
@@ -117,7 +109,7 @@ const TempChat = () => {
                 setPrompt(value);
               }}
               value={prompt}
-              disabled={loading}
+              disabled={isLoading}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -127,7 +119,7 @@ const TempChat = () => {
             />
             <button
               className="btn btn-circle btn-sm absolute bottom-4 right-[5px] z-0 border-none !bg-base-100 shadow-none lg:btn-md"
-              disabled={loading || prompt.length < 1}
+              disabled={isLoading || prompt.length < 1}
               type="submit"
             >
               <LuSendHorizontal className="" size={30} onClick={sendPrompt} />
