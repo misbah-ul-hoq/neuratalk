@@ -14,12 +14,10 @@ interface Chats {
 }
 const TempChat = () => {
   const [prompt, setPrompt] = useState("");
-  const [loading, setLoading] = useState(false);
   const [chats, setChats] = useState<Chats[] | null>(null);
   const [addTempChatPrompt, { isLoading }] = useTempChatMutation();
 
   const sendPrompt = async () => {
-    setLoading(true);
     setChats(
       chats
         ? [...chats, { prompt, response: "", title: "" }]
@@ -52,7 +50,6 @@ const TempChat = () => {
       console.error("Error fetching secret key:", error);
     } finally {
       setPrompt("");
-      setLoading(false);
     }
   };
 
@@ -114,7 +111,7 @@ const TempChat = () => {
                 setPrompt(value);
               }}
               value={prompt}
-              disabled={loading}
+              disabled={isLoading}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
@@ -124,7 +121,7 @@ const TempChat = () => {
             />
             <button
               className="btn btn-circle btn-sm absolute bottom-4 right-[5px] z-0 border-none !bg-base-100 shadow-none lg:btn-md"
-              disabled={loading || prompt.length < 1}
+              disabled={isLoading || prompt.length < 1}
               type="submit"
             >
               <LuSendHorizontal className="" size={30} onClick={sendPrompt} />
