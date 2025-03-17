@@ -10,11 +10,9 @@ import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const NavBar = () => {
-  const { isAuthenticated, user } = useSelector(
-    (state: RootState) => state.auth,
-  );
-  const { data: session, status } = useSession();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { status } = useSession();
+  const [, setIsLoggedIn] = useState<boolean>(false);
   const pathName = usePathname();
 
   useEffect(() => {

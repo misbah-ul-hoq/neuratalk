@@ -1,12 +1,8 @@
-import { AppDispatch, RootState } from "@/redux/store";
+import { RootState } from "@/redux/store";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ThemeChanger from "./ThemeChanger";
-import { logout } from "@/redux/features/auth/authSlice";
-import Swal from "sweetalert2";
-import { redirect } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { FiLogOut } from "react-icons/fi";
 
@@ -14,7 +10,6 @@ const ProfileDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { user } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch<AppDispatch>();
   console.log(user);
   const { data: session } = useSession();
 
@@ -28,22 +23,22 @@ const ProfileDropdown: React.FC = () => {
     }
   };
 
-  const handeLogout = () => {
-    Swal.fire({
-      title: "Are you sure you want to logout?",
-      text: `Logout of Neuratalk as ${user?.email}`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Logout!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(logout());
-        redirect("/temp-chat");
-      }
-    });
-  };
+  // const handeLogout = () => {
+  //   Swal.fire({
+  //     title: "Are you sure you want to logout?",
+  //     text: `Logout of Neuratalk as ${user?.email}`,
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, Logout!",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       dispatch(logout());
+  //       redirect("/temp-chat");
+  //     }
+  //   });
+  // };
 
   // Add event listener for clicks outside the dropdown
   useEffect(() => {

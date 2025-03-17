@@ -1,10 +1,8 @@
 "use client";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-import Image from "next/image";
 import React, { useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu";
 import { useSaveChatMutation } from "@/redux/features/chats/chatApiSlice";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 // import { marked } from "marked";
@@ -19,7 +17,6 @@ const TempChat = () => {
   const [prompt, setPrompt] = useState("");
   const [chats, setChats] = useState<Chats[] | null>(null);
   const [addNewChat, { isLoading }] = useSaveChatMutation();
-  const router = useRouter();
   const { data: session, status } = useSession();
 
   const sendPrompt = async () => {
