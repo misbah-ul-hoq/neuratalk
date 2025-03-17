@@ -7,6 +7,7 @@ import ThemeChanger from "./ThemeChanger";
 import { logout } from "@/redux/features/auth/authSlice";
 import Swal from "sweetalert2";
 import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const ProfileDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -14,6 +15,7 @@ const ProfileDropdown: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   console.log(user);
+  const { data: session } = useSession();
 
   // Function to handle clicks outside the dropdown
   const handleClickOutside = (event: MouseEvent) => {
@@ -58,7 +60,7 @@ const ProfileDropdown: React.FC = () => {
         className="flex items-center focus:outline-none"
       >
         <Image
-          src={`${user?.photoUrl || "/user.jpg"}`} // Replace with your profile picture URL
+          src={`${session?.user?.image || "/user.jpg"}`} // Replace with your profile picture URL
           alt="Profile"
           className="h-10 w-10 rounded-full"
           height={10}

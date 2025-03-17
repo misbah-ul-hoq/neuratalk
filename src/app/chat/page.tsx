@@ -58,9 +58,9 @@ const TempChat = () => {
   };
 
   return (
-    <section className="relative h-[calc(100dvh-4rem)] overflow-y-auto">
+    <section className="h-[calc(100dvh-4rem) relative h-[100dvh] overflow-y-auto">
       <div className="flex flex-col justify-stretch pt-3">
-        <div className="max-h-[calc(100dvh-158px)] overflow-y-auto lg:max-h-[76vh]">
+        <div className="max-h-[calc(100dvh-158px) lg:max-h-[76vh overflow-y-auto">
           <div className="container-center mx-auto mb-3 w-full !max-w-4xl grow">
             {chats &&
               chats?.map((chat, index) => {
@@ -103,7 +103,7 @@ const TempChat = () => {
           <form className="container-center absolute bottom-1 z-[1] mx-auto !max-w-xl lg:bottom-2">
             <textarea
               placeholder={"Message NeuraTalk"}
-              className={`textarea textarea-bordered !w-full pr-16 ${"h-[80px]"} text-lg placeholder:opacity-70`}
+              className={`textarea textarea-bordered !w-full border-primary pr-16 ${"h-[80px]"} text-lg placeholder:opacity-70`}
               onChange={(e) => {
                 const value = e.target.value;
                 setPrompt(value);

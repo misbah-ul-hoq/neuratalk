@@ -9,7 +9,7 @@ const StoreProvider = ({ children }: { children: ReactNode }) => {
   return (
     <SessionProvider>
       <Provider store={store}>
-        {/* <NavBar /> */}
+        <NavBar />
         <div className="">{children}</div>
       </Provider>
     </SessionProvider>

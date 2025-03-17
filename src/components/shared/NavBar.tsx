@@ -7,12 +7,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "./ProfileDropDown";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const NavBar = () => {
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth,
   );
-  console.log(isAuthenticated, user);
+  const { data: session, status } = useSession();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const pathName = usePathname();
 
@@ -23,7 +24,12 @@ const NavBar = () => {
     }
   }, [isAuthenticated]);
 
-  if (pathName.includes("login") || pathName.includes("signup")) {
+  if (
+    pathName.includes("login") ||
+    pathName.includes("signup") ||
+    status === "loading" ||
+    status === "unauthenticated"
+  ) {
     return null;
   }
 
@@ -44,7 +50,7 @@ const NavBar = () => {
           NeuraTalk
         </Link>
 
-        {!isLoggedIn && (
+        {status !== "authenticated" && (
           <div className="">
             <Link href={`/login`} className="btn btn-neutral w-24 rounded-full">
               Log In
@@ -52,7 +58,7 @@ const NavBar = () => {
           </div>
         )}
 
-        {isLoggedIn && <ProfileDropdown />}
+        {status === "authenticated" && <ProfileDropdown />}
       </nav>
     </header>
   );
