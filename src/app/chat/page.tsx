@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu";
 import { useSaveChatMutation } from "@/redux/features/chats/chatApiSlice";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 // import { marked } from "marked";
 // import Markdown from "react-markdown";
@@ -19,6 +20,7 @@ const TempChat = () => {
   const [chats, setChats] = useState<Chats[] | null>(null);
   const [addNewChat, { isLoading }] = useSaveChatMutation();
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   const sendPrompt = async () => {
     setChats(
@@ -29,7 +31,7 @@ const TempChat = () => {
 
     try {
       addNewChat({
-        user: "arbanpublicschool@gmail.com",
+        user: session?.user,
         prompt,
       }).then((res) => {
         console.log(res);
@@ -39,16 +41,17 @@ const TempChat = () => {
             chats
               ? [
                   ...chats,
-                  {
-                    prompt,
-                    response:
-                      data.chats.chats[data.chats.chats.length - 1].response,
-                    title: data.chats.chats[data.chats.chats.length - 1].title,
-                  },
+                  // {
+                  //   prompt,
+                  //   response:
+                  //     data.chats.chats[data.chats.chats.length - 1].response,
+                  //   title: data.chats.chats[data.chats.chats.length - 1].title,
+                  // },
+                  data,
                 ]
               : [{ prompt, response: data.response, title: data.title }],
           );
-        router.push(`/chat/${data.chats._id}`);
+        // router.push(`/chat/${data.chats._id}`);
       });
     } catch (error) {
       console.error("Error fetching secret key:", error);
@@ -58,9 +61,11 @@ const TempChat = () => {
   };
 
   return (
-    <section className="h-[calc(100dvh-4rem) relative h-[100dvh] overflow-y-auto">
+    <section
+      className={`${status === "authenticated" ? "h-[calc(100dvh-4rem)]" : "h-[100dvh]"} relative overflow-y-auto`}
+    >
       <div className="flex flex-col justify-stretch pt-3">
-        <div className="max-h-[calc(100dvh-158px) lg:max-h-[76vh overflow-y-auto">
+        <div className="max-h-[calc(100dvh-158px)] overflow-y-auto lg:max-h-[76vh]">
           <div className="container-center mx-auto mb-3 w-full !max-w-4xl grow">
             {chats &&
               chats?.map((chat, index) => {
@@ -72,7 +77,7 @@ const TempChat = () => {
                       </div>
                     </div>
                     <div className="chat chat-start">
-                      <div className="avatar chat-image">
+                      {/* <div className="avatar chat-image">
                         <div className="w-9 rounded-full lg:w-10">
                           <Image
                             src={`/neuratalk-logo.png`}
@@ -82,8 +87,8 @@ const TempChat = () => {
                             className="w-10 lg:h-10"
                           />
                         </div>
-                      </div>
-                      <div className="chat-bubble bg-base-300 text-base-content">
+                      </div> */}
+                      <div className="chat-bubble bg-base-100 pl-0 text-base-content">
                         {index === chats.length - 1 && isLoading ? (
                           <span className="loading loading-dots loading-md"></span>
                         ) : (

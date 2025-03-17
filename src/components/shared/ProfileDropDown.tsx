@@ -7,7 +7,8 @@ import ThemeChanger from "./ThemeChanger";
 import { logout } from "@/redux/features/auth/authSlice";
 import Swal from "sweetalert2";
 import { redirect } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { FiLogOut } from "react-icons/fi";
 
 const ProfileDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -70,22 +71,20 @@ const ProfileDropdown: React.FC = () => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 rounded-md bg-base-100 py-1 shadow-lg">
-          <Link
-            href="/me"
-            className="block px-4 py-2 text-sm hover:bg-base-200"
-          >
-            Profile
-          </Link>
+        <div className="absolute right-0 mt-2 w-56 space-y-3 rounded-md bg-base-100 p-3 shadow-lg">
           <div className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-base-200">
             <span>Switch Theme</span>
             <ThemeChanger />
           </div>
+
           <button
-            onClick={handeLogout}
-            className="block px-4 py-2 text-sm hover:bg-base-200"
+            onClick={() => {
+              signOut();
+            }}
+            className="flex w-full items-center justify-center gap-2 rounded-md border border-black bg-base-100 px-4 py-1 transition-all duration-200 dark:border-white"
           >
-            Logout
+            <FiLogOut className="h-5 w-5" />
+            <span className="font-medium">Logout</span>
           </button>
         </div>
       )}
