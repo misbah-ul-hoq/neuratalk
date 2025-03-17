@@ -2,8 +2,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { LuSendHorizontal } from "react-icons/lu";
-// import { marked } from "marked";
-// import Markdown from "react-markdown";
 import MarkdownRenderer from "./MarkdownRenderer";
 import { useTempChatMutation } from "@/redux/features/chats/chatApiSlice";
 
